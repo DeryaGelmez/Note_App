@@ -11,10 +11,10 @@ import com.example.thinkpad.Models.Note
 import com.example.thinkpad.R
 import kotlin.random.Random
 
-class NotesAdapter(private val context: Context,val listener:NotesClickListener):RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
+class NotesAdapter(private val context: Context,val listener:NotesClickListener):RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-private val NotesList:ArrayList<Note>()
-    private val fullList:ArrayList<Note>()
+private val NotesList=ArrayList<Note>()
+    private val fullList=ArrayList<Note>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
             LayoutInflater.from(context).inflate(R.layout.list_item,parent,false)
@@ -50,7 +50,20 @@ fun updateList(newList:List<Note>){
 
     NotesList.clear()
     NotesList.addAll(fullList)
+    notifyDataSetChanged()
 }
+fun filterList(search:String){
+    NotesList.clear()
+    for (item in fullList){
+        if(item.title?.lowercase()?.contains(search.lowercase())==true ||
+            item.note?.lowercase()?.contains(search.lowercase())==true){
+            NotesList.add(item)
+        }
+    }
+    notifyDataSetChanged()
+}
+
+
 
     fun randomColor():Int{
 val list=ArrayList<Int>()
