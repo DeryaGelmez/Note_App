@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ThinkPad"
 include(":app")
- 
+//include (":library")
