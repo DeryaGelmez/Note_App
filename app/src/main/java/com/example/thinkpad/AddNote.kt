@@ -33,16 +33,20 @@ try{
 }catch (e:Exception){
     e.printStackTrace()
 }
+
 binding.imgCheck.setOnClickListener{
 val title=binding.etTitle.text.toString()
     val note_desc=binding.etNote.text.toString()
+
+
     if (title.isNotEmpty() || note_desc.isNotEmpty()){
         val formatter=SimpleDateFormat("EEE, d MMM yyyy HH:mm a")
         if(isUpdate){
             note=Note(
                 old_note.id,title,note_desc,formatter.format(Date())
             )
-            }else{
+            }
+        else{
     note=Note(
     null,title,note_desc,formatter.format(Date())
 )
@@ -54,7 +58,8 @@ val title=binding.etTitle.text.toString()
 
 
 
-    }else{
+    }else
+    {
         Toast.makeText(this@AddNote,"Please enter some data",Toast.LENGTH_SHORT).show()
         return@setOnClickListener
     }
