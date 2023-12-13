@@ -7,7 +7,7 @@
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
     <color name="colorPrimaryVariant">#6A1B9A</color>
-    <color name="grey">#4A4F51</color>
+    <color name="grey">#9E9E9E</color>
 
 
 
@@ -17,4 +17,11 @@
     <color name="NoteColor4">#D9D55B</color>
     <color name="NoteColor5">#318BD1</color>
     <color name="NoteColor6">#D345D0</color>
+
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple">#FF6200EE</color>
+    <color name="darkpurple">#FF3700B3</color>
+    <color name="lightgrey">#DCDCDC</color>
+
 </resources>

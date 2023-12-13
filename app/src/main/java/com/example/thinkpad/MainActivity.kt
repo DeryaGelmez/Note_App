@@ -2,17 +2,15 @@ package com.example.thinkpad
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.SearchView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.thinkpad.Adapter.NotesAdapter
 import com.example.thinkpad.Database.NoteDatabase
@@ -22,12 +20,14 @@ import com.example.thinkpad.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, PopupMenu.OnMenuItemClickListener{
 
+
+
+
 private lateinit var binding: ActivityMainBinding
 private lateinit var database: NoteDatabase
 lateinit var viewModel: NoteViewModel
 lateinit var adapter: NotesAdapter
 lateinit var selectedNote:Note
-
 private val updateNote=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
 if(result.resultCode==Activity.RESULT_OK){
     val note=result.data?.getSerializableExtra("note") as? Note
@@ -89,6 +89,7 @@ adapter.filterList(newText)
                 }
                 return true
                 }
+
 
 
 
