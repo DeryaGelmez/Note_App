@@ -61,8 +61,8 @@ errorMessage="Email address is invalid"
         val value=mBinding.passwordEt.text.toString()
         if(value.isEmpty()){
             errorMessage="Password is required"
-        }else if(value.length<6){
-            errorMessage="Password must be 6 characters long"
+        }else if(value.length<4){
+            errorMessage="Password must be 4 characters long"
         }
         if(errorMessage!=null) {
             mBinding.passwordTil.apply {
@@ -88,16 +88,14 @@ errorMessage="Email address is invalid"
                 }
             }
         }
-
         mBinding.registerBtn.setOnClickListener{
 
-           /* val client = OkHttpClient()
-            val request = Request.Builder()
-                .url("http://localhost:5000")
-                .build()
-            val response = client.newCall(request).execute()*/
+            val intent = Intent(this, RegisterActivity::class.java)
+            getContent.launch(intent)
+        }
+        mBinding.loginBtn.setOnClickListener{
+
             var g=mBinding.passwordTil.isErrorEnabled
-            var errorMessage:String = ""
             if(!mBinding.passwordTil.isErrorEnabled && !mBinding.emailTil.isErrorEnabled){
                 val gfgThread = Thread {
                     try {
@@ -106,7 +104,7 @@ errorMessage="Email address is invalid"
                         val JSON: MediaType = MediaType.get("application/json; charset=utf-8")
                         val body: RequestBody = RequestBody.create(JSON, jsonRequestBody)
                         val request = Request.Builder()
-                            .url("http://192.168.1.92:5000/api/Login?email="+mBinding.emailEt.text+"&password="+mBinding.passwordEt.text)
+                            .url("http://192.168.1.45:5000/api/Login/Login?email="+mBinding.emailEt.text+"&password="+mBinding.passwordEt.text)
                             .post(body)
                             .build()
                         val response = client.newCall(request).execute()
@@ -126,6 +124,7 @@ errorMessage="Email address is invalid"
                         }
 
                     } catch (e: Exception) {
+                        mBinding.textView.text= e.message
                         e.printStackTrace()
                     }
 

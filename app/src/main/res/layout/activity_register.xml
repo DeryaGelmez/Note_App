@@ -131,6 +131,24 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/register"                />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginBtn"
+                style="@style/TextAppearance.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/login"                />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:paddingLeft="22dp"
+                android:text="TextView"
+                android:textSize="20dp"
+                android:translationX="100dp" />
         </LinearLayout>
 
 

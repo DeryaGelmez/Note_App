@@ -11,11 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.thinkpad.MainActivity
 import com.example.thinkpad.Models.Note
 import com.example.thinkpad.Models.NoteViewModel
 import com.example.thinkpad.R
 import com.example.thinkpad.databinding.ActivityRegisterBinding
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
@@ -31,6 +34,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, View.OnFocus
         mBinding.passwordEt.onFocusChangeListener=this
         mBinding.cPasswordEt.onFocusChangeListener=this
         onClick(mBinding.root)
+        mBinding.textView.text=""
+
     }
     private fun validateFullName():Boolean {
         var errorMessage: String?=null
@@ -90,8 +95,8 @@ errorMessage="Email address is invalid"
         val value=mBinding.cPasswordEt.text.toString()
         if(value.isEmpty()){
             errorMessage="Confirm password is required"
-        }else if(value.length<6){
-            errorMessage="Confirm password must be 6 characters long"
+        }else if(value.length<4){
+            errorMessage="Confirm password must be 4 characters long"
         }
         if(errorMessage!=null) {
             mBinding.cPasswordTil.apply {
@@ -133,12 +138,52 @@ private fun validatePasswordAndConfirmPassword():Boolean{
                 }
             }
         }
-
-        mBinding.registerBtn.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+        mBinding.loginBtn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
             getContent.launch(intent)
+            mBinding.textView.text=""
         }
 
+        mBinding.registerBtn.setOnClickListener{
+
+            var g=mBinding.passwordTil.isErrorEnabled
+            var errorMessage:String = ""
+            mBinding.textView.text=""
+            if(!mBinding.passwordTil.isErrorEnabled && !mBinding.emailTil.isErrorEnabled){
+                val gfgThread = Thread {
+                    try {
+                        val client = OkHttpClient()
+                        val jsonRequestBody = ""
+                        val JSON: MediaType = MediaType.get("application/json; charset=utf-8")
+                        val body: RequestBody = RequestBody.create(JSON, jsonRequestBody)
+                        val request = Request.Builder()
+                            .url("http://192.168.1.45:5000/api/Login/Register?fullName="+mBinding.fullNameEt.text+"&email="+mBinding.emailEt.text+"&password="+mBinding.passwordEt.text)
+                            .post(body)
+                            .build()
+                        val response = client.newCall(request).execute()
+                        if  (response.isSuccessful) {
+                            val responseBody = response.body()?.string()
+
+                            val isTrue = responseBody?.toBoolean() ?: false
+                            if (isTrue)
+                            {
+                                val intent = Intent(this, LoginActivity::class.java)
+                                getContent.launch(intent)
+                                mBinding.textView.text=""
+                            }
+                            else    {
+                                mBinding.textView.text= "Hata!"
+                            }
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+                gfgThread.start()
+            }
+        }
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
